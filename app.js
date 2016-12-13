@@ -1,10 +1,3 @@
-//design and build the backend of a to do application - first just routes & schema
-//need to be able to add things - post to tasklist
-//need to be able to get all tasks back - get to tasklist
-//need to be able to get specific tasks back - get to tasklist/task number
-//need to be able to remove things from the list - delete to tasklist/task number
-//need to be able to modify tasks and mark as done - put to tasklist/task number
-
 //basic schema
 // {
 //     "success": boolean
@@ -28,6 +21,16 @@
 
 var handlebars = require('express-handlebars')
 var express = require('express')
+var mysql = require('mysql')
+
+var connection = mysql.createConnection({
+    host: '192.168.20.56',
+    user: 'root',
+    password: '',
+    database: 'todo'
+})
+
+connection.connect()
 
 var app = express()
 
@@ -36,16 +39,25 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 app.get('/', function(rq, rs) {
-    rs.render('home')
+    connection.query('SELECT * FROM `tasks`;', function(err, rows, fields) {
+        rs.render('home', {
+            content: rows
+        })
+    })
 })
 
-//add things to task list
+//add things to task
 app.post('/task', function(rq, rs) {
     rs.json({})
 })
 
-//get everything from tasklist
-app.get('/tasklist', function(rq, rs) {
+//get everything from tasks
+app.get('/tasks', function(rq, rs) {
+    rs.json({})
+})
+
+//remove all tasks from tasks
+app.delete('/tasks', function(rq, rs) {
     rs.json({})
 })
 

@@ -1,11 +1,16 @@
 <header class="text-center">
-    <h1>To Do</h1>
+    <h1>To Do!</h1>
 </header>
 <main>
     <div class="container task-box">
         <h3 class="text-center">Tasklist:</h3>
         <div class="task-list">
-            <button class="btn-info btn pull-right">Get Tasks</button>
+            <button class="btn-warning btn pull-right">Get Tasks</button>
+            <ul>
+            {{#each content}}
+                <li>{{this.task}}</li>
+            {{/each}}
+            </ul>
         </div>
         <div class="btn-box text-center">
             <button class="btn-success btn">Add</button>

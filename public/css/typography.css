@@ -1,0 +1,16 @@
+header h1 {
+    color: #DCAF73;
+    font-size: 80px;
+    text-shadow: 5px 5px #292929;
+    margin-top: 60px;
+}
+
+.task-box {
+    color: #D0A469;
+    font-size: 20px;
+    text-shadow: 2px 2px #292929;
+}
+
+.task-box h3 {
+    font-size: 30px;
+}
