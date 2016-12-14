@@ -1,5 +1,6 @@
 var handlebars = require('express-handlebars')
 var express = require('express')
+var bodyParser = require('body-parser')
 var mysql = require('mysql')
 var MongoClient = require('mongodb').MongoClient
 var assert = require('assert')
@@ -10,6 +11,7 @@ var url = 'mongodb://localhost:27017/tasks'
 app.engine('handlebars', handlebars({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
+app.use(bodyParser.json())
 
 app.get('/', function(rq, rs) {
     rs.render('home')
@@ -30,7 +32,7 @@ app.get('/tasks', function(rq, rs) {
         db.collection('tasklist').find().toArray(function(err, doc) {
             assert.equal(null, err)
             response.success = true
-            response.message = 'tasks sent'
+            response.message = 'tasks enclosed'
             response.data = doc[0].tasks
             rs.json(response)
             db.close()
@@ -49,7 +51,7 @@ app.get('/task/:id', function(rq, rs) {
             {_id: 0, tasks: {$elemMatch: {taskId: id}}}).toArray(function(err, doc) {
             assert.equal(null, err)
             response.success = true
-            response.message = 'tasks sent'
+            response.message = 'task enclosed if exists'
             response.data = doc[0]
             rs.json(response)
             db.close()
@@ -66,13 +68,12 @@ app.post('/task', function(rq, rs) {
         db.collection('tasklist').updateOne({}, {
             $push: { "tasks":
                 {
-                    "taskId": 3,
-                    "name": "Build a snowman",
-                    "definition": "Get some snow and some carrots and smush it all together.",
-                    "deadline": "25/06/2084",
-                    "complete": false
+                    "taskId": rq.body.tasks.taskId,
+                    "name": rq.body.tasks.name,
+                    "definition": rq.body.tasks.definition,
+                    "deadline": rq.body.tasks.deadline,
+                    "complete": rq.body.tasks.complete
                 }
-
             }
         },
         function(err, result) {
@@ -88,19 +89,18 @@ app.post('/task', function(rq, rs) {
 
 //modify a task on the tasklist (mark as done etc)
 app.put('/task/:id', function(rq, rs) {
-    var id = parseInt(rq.params.id)
     MongoClient.connect(url, function(err, db) {
         console.log('Connected correctly to server')
         assert.equal(null, err)
 
         db.collection("tasklist").updateOne({
-                "tasks.taskId": id},
+                "tasks.taskId": rq.body.tasks.taskId},
             {
                 $set: {
-                    "tasks.$.name": "My new task",
-                    "tasks.$.definition": "My new description",
-                    "tasks.$.deadline": "My new deadline",
-                    "tasks.$.complete": true
+                    "tasks.$.name": rq.body.tasks.name,
+                    "tasks.$.definition": rq.body.tasks.definition,
+                    "tasks.$.deadline": rq.body.tasks.deadline,
+                    "tasks.$.complete": rq.body.tasks.complete
                 }
             }, function(err, result) {
                 assert.equal(null, err)
@@ -158,6 +158,7 @@ app.listen(9090, function() {
     console.log('Hooray it works!')
 })
 
+//mongo db installation and importation stuff
 // mongod
 // npm install mongodb
 // mongoimport --db tasks --collection tasklist --drop --file data.json
