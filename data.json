@@ -1,0 +1,18 @@
+{
+  "tasks": [
+    {
+      "taskId": 1,
+      "name": "Build a snowman",
+      "definition": "Get some snow and some carrots and smush it all together.",
+      "deadline": "25/06/2084",
+      "complete": false
+    },
+    {
+      "taskId": 2,
+      "name": "Become a super hero",
+      "definition": "Fall into a radioactive forest and wake up as tree man.",
+      "deadline": "12/09/6000",
+      "complete": false
+    }
+  ]
+}
