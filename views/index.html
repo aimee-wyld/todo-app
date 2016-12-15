@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="css/typography.css" type="text/css">
     <script src="vendor/ember/jquery.js"></script>
     <script src="vendor/ember/ember-compiler.js"></script>
-    <script src="vendor/ember/ember.js"></script>
-    <!--<script src="http://builds.emberjs.com/tags/v2.10.1/ember.prod.js"></script>-->
+    <!--<script src="vendor/ember/ember.js"></script>-->
+    <script src="http://builds.emberjs.com/tags/v2.10.1/ember.debug.js"></script>
     <script src="http://builds.emberjs.com/tags/v2.10.0/ember-data.prod.js"></script>
     <script src="js/core.js"></script>
 </head>
@@ -18,18 +18,9 @@
     </header>
     <main>
         <div class="container task-box">
-            <h3 class="text-center">Tasklist:</h3>
-            <div class="task-list">
-                <button class="btn-warning btn pull-right">Get Tasks</button>
-                <script type="text/x-handlebars">
-                    {{outlet}}
-                </script>
-            </div>
-            <div class="btn-box text-center">
-                <button {{action "test"}} class="btn-success btn">Add</button>
-                <button class="btn-danger btn">Remove</button>
-                <button class="btn-primary btn">Edit</button>
-            </div>
+            <script type="text/x-handlebars">
+                {{outlet}}
+            </script>
         </div>
     </main>
     <footer class="col-md-12">
@@ -37,13 +28,24 @@
     </footer>
 
     <script type="text/x-handlebars" data-template-name="index">
-        <ul>
-
-        {{#each model.data as |task|}}
-          <li>{{task.taskId}}) {{task.name}}: {{task.definition}}</li>
-        {{/each}}
-        </ul>
+        <h3 class="text-center">Tasklist:</h3>
+            <div class="task-list">
+                <button class="btn-warning btn pull-right">Get Tasks</button>
+                <ul>
+                {{#each model.data as |task|}}
+                  <li>{{task.taskId}}) {{task.name}}: {{task.definition}}</li>
+                {{/each}}
+                </ul>
+                <input type="text" placeholder="New task here" class="new-task">
+            </div>
+            <div class="btn-box text-center">
+                <button {{action "add"}} class="btn-success btn">Add</button>
+                <button {{action "remove"}} class="btn-danger btn">Remove</button>
+                <button {{action "edit"}} class="btn-primary btn">Edit</button>
+            </div>
      </script>
 
 </body>
 </html>
+
+

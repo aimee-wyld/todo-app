@@ -1,30 +1,5 @@
 var App = Ember.Application.create({
-    rootElement: ".task-list"
-})
-
-App.Router.map(function() {
-    // this.route('task', { path: '/' });
-})
-
-
-App.ApplicationAdapter = DS.RESTAdapter.extend({
-    host: 'http://localhost:9090'
-})
-
-App.ApplicationSerializer = DS.RESTSerializer.extend({
-    primaryKey: '_id',
-    serializeId: function(id) {
-        return id.toString()
-    }
-})
-
-
-App.Task = DS.Model.extend({
-    "taskId": DS.attr(),
-    "name": DS.attr(),
-    "definition": DS.attr(),
-    "deadline": DS.attr(),
-    "complete": DS.attr()
+    rootElement: ".task-box"
 })
 
 App.TasksModel = Ember.Object.extend({
@@ -46,12 +21,21 @@ App.TasksModel.reopenClass({
             }
         })
         return result
-    }
-})
-
-App.TaskRoute = Ember.Route.extend({
-    model: function() {
-        return this.store.findAll('task')
+    },
+    add: function() {
+        var result = App.TasksModel.create({})
+        $.ajax({
+            url: '/task/',
+            type: 'POST',
+            accepts: 'application/json',
+            success: function(data) {
+                result.setProperties(data)
+            },
+            error: function() {
+                console.log('error')
+            }
+        })
+        return result
     }
 })
 
@@ -61,3 +45,21 @@ App.IndexRoute = Ember.Route.extend({
     }
 })
 
+App.IndexController = Ember.Controller.extend({
+    actions: {
+        add: function() {
+            if ($('.newTask').val != "") {
+                console.log('add task')
+            }
+        },
+        remove: function() {
+            console.log('remove task')
+        },
+        edit: function() {
+            console.log('edit task')
+        },
+        confirmAdd: function() {
+            console.log('confirm')
+        }
+    }
+})

@@ -1,7 +1,6 @@
 var handlebars = require('express-handlebars')
 var express = require('express')
 var bodyParser = require('body-parser')
-var mysql = require('mysql')
 var MongoClient = require('mongodb').MongoClient
 var assert = require('assert')
 
