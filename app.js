@@ -11,10 +11,11 @@ var url = 'mongodb://localhost:27017/tasks'
 app.engine('handlebars', handlebars({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
+app.use(express.static('views'))
 app.use(bodyParser.json())
 
 app.get('/', function(rq, rs) {
-    rs.render('home')
+    rs.sendFile('/views/index.html')
 })
 
 var response = {
