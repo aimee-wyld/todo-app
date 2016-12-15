@@ -20,14 +20,15 @@
         <div class="container task-box">
             <h3 class="text-center">Tasklist:</h3>
             <div class="task-list">
+                <button class="btn-warning btn pull-right">Get Tasks</button>
                 <script type="text/x-handlebars">
                     {{outlet}}
                 </script>
             </div>
             <div class="btn-box text-center">
-                <button class="btn-success btn add">Add</button>
-                <button class="btn-danger btn remove">Remove</button>
-                <button class="btn-primary btn edit">Edit</button>
+                <button {{action "test"}} class="btn-success btn">Add</button>
+                <button class="btn-danger btn">Remove</button>
+                <button class="btn-primary btn">Edit</button>
             </div>
         </div>
     </main>
