@@ -11,7 +11,7 @@ footer {
 
 main {
     height: 600px;
-    background-color: #E6A468;
+    background-color: #8F350E;
     border-left: 3px solid #292929;
     border-right: 3px solid #292929;
 }
@@ -19,7 +19,7 @@ main {
 .task-box {
     height: 100%;
     margin: auto;
-    background-color: #651907;
+    background-color: #471605;
     color: #D0A469;
     border-left: 3px solid #292929;
     border-right: 3px solid #292929;
